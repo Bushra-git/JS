@@ -1,0 +1,3 @@
+- Fix arrayAverage function: correct sum accumulation, move average calculation outside loop, return average, remove console.log.
+- Fix isEvenorOdd function: remove loop, return boolean, rename to isEven.
+- Test the functions.
