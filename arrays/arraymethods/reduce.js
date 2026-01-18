@@ -17,3 +17,14 @@ let max = num.reduce((max , el) => {
     }
 });
 console.log(max);
+
+//to find min number
+
+let min = num.reduce((min , el) => {
+    if(min > el){
+        return el;
+    }else{
+        return min;
+    }
+} );
+console.log(min);
