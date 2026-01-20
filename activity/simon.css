@@ -28,3 +28,7 @@ body{
 .blue{
     background-color :rgb(38, 38, 139);
 }
+
+.flash{
+    background-color: aliceblue;
+}
