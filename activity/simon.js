@@ -13,23 +13,23 @@ document.addEventListener("keypress", function() {
     }
 
 });
-function gameFLash(btn){
-    btn.classList.add("flash");
+function gameFLash(el){
+    el.classList.add("flash");
     setTimeout(function(){
-        btn.classList.remove("flash");
+        el.classList.remove("flash");
     }, 500);
 }
 
-function userFLash(btn){
-    btn.classList.add("flash");
+function userFLash(el){
+    el.classList.add("flash");
     setTimeout(function(){
-        btn.classList.remove("flash");
+        el.classList.remove("flash");
     }, 500);
 }
 function levelUp() {
     level++;
     userseq= [];
-    h2.innerHtml = (`Level ${level}`);
+    h2.innerText = `Level ${level}`;
      let randIdx = Math.floor(Math.random() * 4);
      let randcolor = btn[randIdx];
         let randbtn = document.querySelector("." + randcolor);
@@ -40,18 +40,31 @@ function levelUp() {
 }
 
 function checkAns(idx) {
-    if( userseq[idx] === gameseq[idx]){
-        if(userFLash.length === gameseq.length){
+    if (userseq[idx] === gameseq[idx]) {
+        if (userseq.length === gameseq.length) {
             setTimeout(function(){
                 levelUp();
             } , 1000);
-        } else {
-            h2.innerHTML = `Game Over,<b>You're score was ${level}<b> Press Any Key to Restart`;
-            started = false;
-            level=0;
-            gameseq = [];
-            userseq = [];
         }
+    } else {
+        h2.innerHTML = `Game Over, <b>Your score was ${level}</b>. Press any key to restart`;
+        reset();
     }
+}
 
+// handle user clicks on color buttons
+let allBtns = document.querySelectorAll(".btn");
+for (let b of allBtns) {
+    b.addEventListener("click", function() {
+        userseq.push(b);
+        userFLash(b);
+        checkAns(userseq.length - 1);
+    });
+}
+
+function reset(){
+    started = false;
+    level = 0;
+    gameseq = [];
+    userseq = [];
 }
