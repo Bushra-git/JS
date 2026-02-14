@@ -1,70 +1,94 @@
-let gameseq = [];
-let userseq = [];
-let h2 = document.querySelector("h3");
-let btn = ["red", "blue", "green", "yellow"];
-let started = false ;
-let level = 0;
-document.addEventListener("keypress", function() {
-    if (started == false) {
+/* GLOBAL VARIABLES */
+let gameSeq = [];  //Game jo colors dikhata hai, woh yahan store honge
+let userSeq = [];   //User jo buttons click karta hai, woh yahan store honge
+
+let btns = ["red", "blue", "green", "yellow"]; //Available button colors
+
+let started = false;   //Game started hai ya nahi
+let level = 0;      //Current level
+
+let h2 = document.querySelector("h3"); //Heading jisme level dikhaya jayega
+
+
+/* GAME START (KEYPRESS) */
+document.addEventListener("keypress", function () {  
+    if (started === false) {  
         console.log("game started");
         started = true;
-
         levelUp();
     }
-
 });
-function gameFLash(el){
-    el.classList.add("flash");
-    setTimeout(function(){
-        el.classList.remove("flash");
+
+
+/** FLASH FUNCTIONS **/
+function gameFlash(btn) {   //Game button flash
+    btn.classList.add("flash");
+    setTimeout(() => {
+        btn.classList.remove("flash");
     }, 500);
 }
 
-function userFLash(el){
-    el.classList.add("flash");
-    setTimeout(function(){
-        el.classList.remove("flash");
+function userFlash(btn) {  //User click button flash
+    btn.classList.add("flash");
+    setTimeout(() => {
+        btn.classList.remove("flash");
     }, 500);
 }
-function levelUp() {
-    level++;
-    userseq= [];
-    h2.innerText = `Level ${level}`;
-     let randIdx = Math.floor(Math.random() * 4);
-     let randcolor = btn[randIdx];
-        let randbtn = document.querySelector("." + randcolor);
-        gameseq.push(randbtn);
-        console.log(gameseq);
-        gameFLash(randbtn);
 
+
+/** LEVEL UP (LOGIC hain ) **/
+function levelUp() {  //New level shuru karna
+    userSeq = [];     //User sequence reset karna
+    level++;      //Level badhana
+    h2.innerText = `Level ${level}`;    //Heading update karna
+
+    //Random button select karna
+
+    let randIdx = Math.floor(Math.random() * 4);
+    let randColor = btns[randIdx];                      //Random color
+    let randBtn = document.querySelector("." + randColor);  //Random button
+
+    gameSeq.push(randColor);    //Game sequence mein random color add karna
+    console.log(gameSeq);      
+
+    gameFlash(randBtn);          //Random button flash karna
 }
 
-function checkAns(idx) {
-    if (userseq[idx] === gameseq[idx]) {
-        if (userseq.length === gameseq.length) {
-            setTimeout(function(){
-                levelUp();
-            } , 1000);
+
+/**  CHECK ANSWER **/ //match hora hai idhr toh 
+function checkAns(idx) {     //User answer check karna
+    if (userSeq[idx] === gameSeq[idx]) {         //Agar user ka answer sahi hai
+
+        if (userSeq.length === gameSeq.length) {      //Agar user ne poora sequence sahi diya hai
+            setTimeout(levelUp, 1000);        //Next level shuru karna
         }
+
     } else {
-        h2.innerHTML = `Game Over, <b>Your score was ${level}</b>. Press any key to restart`;
+        h2.innerHTML = `Game Over! <b>Your score was ${level}</b><br>Press any key to restart`;
         reset();
     }
 }
 
-// handle user clicks on color buttons
-let allBtns = document.querySelectorAll(".btn");
-for (let b of allBtns) {
-    b.addEventListener("click", function() {
-        userseq.push(b);
-        userFLash(b);
-        checkAns(userseq.length - 1);
+
+/** USER BUTTON CLICKS **/
+let allBtns = document.querySelectorAll(".btn");  //Saare buttons select karna
+
+for (let btn of allBtns) {                          //Har button ke liye click event listener add karna
+    btn.addEventListener("click", function () {        
+        let userColor = btn.getAttribute("id");     //Clicked button ka color lena
+
+        userSeq.push(userColor);            //User sequence mein clicked color add karna
+        userFlash(btn);                        //Clicked button flash karna
+
+        checkAns(userSeq.length - 1);         
     });
 }
 
-function reset(){
+
+/**  RESET GAME ***/
+function reset() {
     started = false;
     level = 0;
-    gameseq = [];
-    userseq = [];
+    gameSeq = [];
+    userSeq = [];
 }
