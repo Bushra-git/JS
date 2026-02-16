@@ -1,0 +1,41 @@
+body {
+    background-color: rgb(185, 185, 91);
+    justify-content: center;
+}
+h1{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color : rgb(122, 106, 106);
+}
+h2 {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 50px;
+    font-style: italic;
+   
+}
+button {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 50px;
+    margin-left: 700px;
+    padding: 10px 10px;
+    background-color: rgb(36, 23, 19);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    font-style: italic;
+
+}
+img {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 50px;
+    width: 300px;
+    margin-left: 600px;
+}
